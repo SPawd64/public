@@ -10,11 +10,11 @@ export const todoController = {
     return todoUseCases.addTodo(text);
   },
 
-  toggleTodo(id: string): Todo[] {
+  toggleTodo(id: number): Todo[] {
     return todoUseCases.toggleTodo(id);
   },
 
-  removeTodo(id: string): Todo[] {
+  removeTodo(id: number): Todo[] {
     return todoUseCases.deleteTodo(id);
   }
 };

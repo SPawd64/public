@@ -13,11 +13,11 @@ export function useTodos() {
     setTodos(todoController.createTodo(text));
   };
 
-  const toggleTodo = (id: string) => {
+  const toggleTodo = (id: number) => {
     setTodos(todoController.toggleTodo(id));
   };
 
-  const deleteTodo = (id: string) => {
+  const deleteTodo = (id: number) => {
     setTodos(todoController.removeTodo(id));
   };
 

@@ -8,8 +8,14 @@ export const todoUseCases = {
 
   addTodo(text: string): Todo[] {
     const todos = todoGateway.getTodos();
+    const usedIds = todos.map(todo => Number(todo.id));
+    let newId: number = 1;
+    while (usedIds.includes(newId)) {
+      newId++;
+    }
+    
     const newTodo: Todo = {
-      id: crypto.randomUUID(),
+      id: newId,
       text,
       completed: false,
     };
@@ -18,7 +24,7 @@ export const todoUseCases = {
     return updated;
   },
 
-  toggleTodo(id: string): Todo[] {
+  toggleTodo(id: number): Todo[] {
     const todos = todoGateway.getTodos();
     const updated = todos.map(todo =>
       todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -27,7 +33,7 @@ export const todoUseCases = {
     return updated;
   },
 
-  deleteTodo(id: string): Todo[] {
+  deleteTodo(id: number): Todo[] {
     const updated = todoGateway.getTodos().filter(todo => todo.id !== id);
     todoGateway.saveTodos(updated);
     return updated;
