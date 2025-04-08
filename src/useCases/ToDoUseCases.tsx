@@ -8,7 +8,7 @@ export const todoUseCases = {
 
   addTodo(text: string): Todo[] {
     const todos = todoGateway.getTodos();
-    const usedIds = todos.map(todo => Number(todo.id));
+    const usedIds = todos.map(todo => todo.id);
     let newId: number = 1;
     while (usedIds.includes(newId)) {
       newId++;
