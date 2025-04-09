@@ -1,20 +1,21 @@
-import { todoUseCases } from "../useCases/ToDoUseCases";
-import { Todo } from "../types/ToDoTypes";
+import { ToDoInteractor } from "../interactors/ToDoInteractor";
+
+const interactor = new ToDoInteractor();
 
 export const todoController = {
-  loadTodos(): Todo[] {
-    return todoUseCases.fetchTodos();
+  loadTodos() {
+    return interactor.fetchTodos();
   },
 
-  createTodo(text: string): Todo[] {
-    return todoUseCases.addTodo(text);
+  createTodo(text: string) {
+    return interactor.addTodo(text);
   },
 
-  toggleTodo(id: number): Todo[] {
-    return todoUseCases.toggleTodo(id);
+  toggleTodo(id: number) {
+    return interactor.toggleTodo(id);
   },
 
-  removeTodo(id: number): Todo[] {
-    return todoUseCases.deleteTodo(id);
-  }
+  removeTodo(id: number) {
+    return interactor.deleteTodo(id);
+  },
 };

@@ -1,41 +1,17 @@
 import { Todo } from "../types/ToDoTypes";
-import { todoGateway } from "../gateways/ToDoGateway";
 
-export const todoUseCases = {
-  fetchTodos(): Todo[] {
-    return todoGateway.getTodos();
-  },
+export interface FetchTodosUseCase {
+  fetchTodos(): Todo[];
+}
 
-  addTodo(text: string): Todo[] {
-    const todos = todoGateway.getTodos();
-    const usedIds = todos.map(todo => todo.id);
-    let newId: number = 1;
-    while (usedIds.includes(newId)) {
-      newId++;
-    }
-    
-    const newTodo: Todo = {
-      id: newId,
-      text,
-      completed: false,
-    };
-    const updated = [...todos, newTodo];
-    todoGateway.saveTodos(updated);
-    return updated;
-  },
+export interface AddTodoUseCase {
+  addTodo(text: string): Todo[];
+}
 
-  toggleTodo(id: number): Todo[] {
-    const todos = todoGateway.getTodos();
-    const updated = todos.map(todo =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    );
-    todoGateway.saveTodos(updated);
-    return updated;
-  },
+export interface ToggleTodoUseCase {
+  toggleTodo(id: number): Todo[];
+}
 
-  deleteTodo(id: number): Todo[] {
-    const updated = todoGateway.getTodos().filter(todo => todo.id !== id);
-    todoGateway.saveTodos(updated);
-    return updated;
-  }
-};
+export interface DeleteTodoUseCase {
+  deleteTodo(id: number): Todo[];
+}
