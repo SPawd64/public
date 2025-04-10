@@ -1,21 +1,37 @@
-import { ToDoInteractor } from "../interactors/ToDoInteractor";
+import { Todo } from "../types/ToDoTypes";
+import { AddTodoUseCase } from "../useCases/AddToDoUseCase";
+import { DeleteTodoUseCase } from "../useCases/DeleteToDoUseCase";
+import { FetchTodosUseCase } from "../useCases/FetchToDoUseCase";
+import { ToggleTodoUseCase } from "../useCases/ToggleToDoUseCase";
 
-const interactor = new ToDoInteractor();
+export interface TodoController {
+    loadTodos(): Promise<Todo[]>;
+    createTodo(text: string): Promise<void>;
+    toggleTodo(id: number): Promise<void>;
+    removeTodo(id: number): Promise<void>;
+}
 
-export const todoController = {
-  loadTodos() {
-    return interactor.fetchTodos();
-  },
+export const createTodoController = (
+    fetchTodosUseCase: FetchTodosUseCase,
+    addTodoUseCase: AddTodoUseCase,
+    toggleTodoUseCase: ToggleTodoUseCase,
+    deleteTodoUseCase: DeleteTodoUseCase
+): TodoController => {
+    return {
+        async loadTodos() {
+            return fetchTodosUseCase.fetchTodos();
+        },
 
-  createTodo(text: string) {
-    return interactor.addTodo(text);
-  },
+        async createTodo(text: string) {
+            await addTodoUseCase.addTodo(text);
+        },
 
-  toggleTodo(id: number) {
-    return interactor.toggleTodo(id);
-  },
+        async toggleTodo(id: number) {
+            await toggleTodoUseCase.toggleTodo(id);
+        },
 
-  removeTodo(id: number) {
-    return interactor.deleteTodo(id);
-  },
+        async removeTodo(id: number) {
+            await deleteTodoUseCase.deleteTodo(id);
+        }
+    };
 };

@@ -1,9 +1,21 @@
 import { useState } from "react";
 import { useTodos } from "../hooks/UseToDo.tsx";
 import "./TodoList.css";
+import { createTodoController } from "../controllers/ToDoController";
+import { AddToDoInteractor } from "../interactors/AddToDoInteractor";
+import { DeleteToDoInteractor } from "../interactors/DeleteToDoInterActor";
+import { FetchToDoInteractor } from "../interactors/FetchToDoInteractor";
+import { ToggleToDoInteractor } from "../interactors/ToggleToDoInteractor";
+
+const todoController = createTodoController(
+  new FetchToDoInteractor(),
+  new AddToDoInteractor(),
+  new ToggleToDoInteractor(),
+  new DeleteToDoInteractor()
+);
 
 export function TodoList() {
-  const { todos, addTodo, toggleTodo, deleteTodo } = useTodos();
+  const { todos, addTodo, toggleTodo, deleteTodo } = useTodos(todoController);
   const [text, setText] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
